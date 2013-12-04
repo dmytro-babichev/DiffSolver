@@ -8,7 +8,7 @@ import java.util.List;
 public class DiffSolverParallel {
 
     public static final String               TEST_PAR_TXT = "testPar.txt";
-    private static      ThreadSafeErrorValue error        = new ThreadSafeErrorValue();
+    private final       ThreadSafeErrorValue error        = new ThreadSafeErrorValue();
     private final int      NUMBER_OF_WORKERS;
     private final double   u0;
     private final int      f;
