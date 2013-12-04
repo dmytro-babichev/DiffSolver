@@ -24,23 +24,28 @@ public class DiffSolverTest {
 
             String sCurrentLine;
             String sCurrentLine2;
+            int lineNumber = 0;
             while ((sCurrentLine = br.readLine()) != null && (sCurrentLine2 = br2.readLine()) != null) {
                 if (!sCurrentLine.equals(sCurrentLine2)) {
+                    System.out.println("Line number: " + lineNumber);
                     System.out.println("Simple: " + sCurrentLine);
                     System.out.println("Concurrent: " + sCurrentLine2);
                     return false;
                 }
+                lineNumber++;
             }
             return true;
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates. e;
+            e.printStackTrace();
             throw e;
         } finally {
             try {
-                assert in != null;
-                assert in1 != null;
-                in.close();
-                in1.close();
+                if (in != null) {
+                    in.close();
+                }
+                if (in1 != null) {
+                    in1.close();
+                }
             } catch (IOException e) {
             }
         }
@@ -52,7 +57,7 @@ public class DiffSolverTest {
         int f = 1000;
         double dt = 0.001;
         double eps = 0.001;
-        int n = 300;
+        int n = 5000;
         int workers = 6;
         DiffSolverParallel solverPar = new DiffSolverParallel(u0, f, dt, eps, n, workers);
         DiffSolver solver = new DiffSolver(u0, f, dt, eps, n);

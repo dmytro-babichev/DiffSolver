@@ -7,32 +7,32 @@ import java.util.List;
 
 public class DiffSolverParallel {
 
-    public static final String TEST_PAR_TXT = "testPar.txt";
-    public static double[] C;
-    public static double[] S;
-    private static ThreadSafeErrorValue error = new ThreadSafeErrorValue();
-    public final  double   eps;
+    public static final String               TEST_PAR_TXT = "testPar.txt";
+    private static      ThreadSafeErrorValue error        = new ThreadSafeErrorValue();
     private final int      NUMBER_OF_WORKERS;
-    private final int      n;
+    private final double   u0;
+    private final int      f;
     private final double   dt;
+    private final double   eps;
+    private final int      n;
     private final double   dx;
     private final double   dy;
-    private final int      f;
     private final double   d;
     private final double   k;
-    private final double   u0;
     private final double   a;
     private final double   b;
     private final double   c;
     private final double[] uCurrent;
     private final double[] uPrevious;
+    private       double[] C;
+    private       double[] S;
 
     public DiffSolverParallel(double u0, int f, double dt, double eps, int n, int workers) {
-        this.n = n;
         this.u0 = u0;
         this.f = f;
         this.dt = dt;
         this.eps = eps;
+        this.n = n;
         this.NUMBER_OF_WORKERS = workers;
         dx = dy = 1.0 / n;
         d = 10 * dx * dx;
@@ -143,7 +143,7 @@ public class DiffSolverParallel {
 
         @Override
         public void run() {
-//            long startTime = System.currentTimeMillis();
+            //            long startTime = System.currentTimeMillis();
             double localError = 0.0;
             for (int i = from; i < to; i++) {
                 for (int j = 1; j < n - 1; j++) {
@@ -155,7 +155,7 @@ public class DiffSolverParallel {
                 }
             }
             error.add(localError);
-//            System.out.println(String.format("Thread (%s,%s) ended in %s ms", from, to, System.currentTimeMillis() - startTime));
+            //            System.out.println(String.format("Thread (%s,%s) ended in %s ms", from, to, System.currentTimeMillis() - startTime));
         }
     }
 }
